@@ -1,0 +1,47 @@
+CREATE DATABASE Catalgo;
+GO
+CREATE TABLE Usuarios (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) UNIQUE NOT NULL,
+    Password NVARCHAR(255) NOT NULL,
+    FechaCreacion DATETIME DEFAULT GETDATE(),
+    FechaModificacion DATETIME DEFAULT GETDATE(),
+    Activo BIT DEFAULT 1
+);
+
+CREATE TABLE Categoria (
+ IdCategoria INT PRIMARY KEY IDENTITY(1,1),
+ Nombre NVARCHAR(100) NOT NULL,
+ Descripcion TEXT ,
+ FechaCreacion DATETIME DEFAULT GETDATE(),
+ FechaModificacion DATETIME DEFAULT GETDATE(),
+ Activo BIT DEFAULT 1,
+);
+
+CREATE TABLE Productos (
+ IdProducto INT PRIMARY KEY IDENTITY(1,1),
+ IdCategoria INT NOT NULL,
+ Nombre  NVARCHAR(100) NOT NULL,
+ Descripcion TEXT ,
+ Precio DECIMAL(18,2) NOT NULL,
+ Stock INT NOT NULL,
+ FechaCreacion DATETIME DEFAULT GETDATE(),
+ FechaModificacion DATETIME DEFAULT GETDATE(),
+ Activo BIT DEFAULT 1,
+ FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria)
+ ON DELETE CASCADE  
+ ON UPDATE CASCADE
+)
+
+
+/*SELECT name FROM sys.sql_logins WHERE name = 'Hardos';
+
+CREATE LOGIN Hardos WITH PASSWORD = '12345';
+GO
+
+CREATE USER Hardos FOR LOGIN Hardos;
+GO
+
+ALTER ROLE db_owner ADD MEMBER Hardos;
+GO*/
